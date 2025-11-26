@@ -94,10 +94,10 @@ void GameManager::displayGameOver(const std::vector<std::unique_ptr<Player> > &p
     std::cout << "总回合数: " << roundsPlayed_ << std::endl;
 
     if (!players.empty()) {
-        auto winner = std::max_element(players.begin(), players.end(),
-                                       [](const auto &a, const auto &b) {
-                                           return a->getChipCount() < b->getChipCount();
-                                       });
+        const auto winner = std::ranges::max_element(players,
+                                                     [](const auto &a, const auto &b) {
+                                                         return a->getChipCount() < b->getChipCount();
+                                                     });
 
         std::cout << "🏆 最终获胜者: " << (*winner)->getName()
                 << " (" << (*winner)->getChipCount() << " 筹码)" << std::endl;
@@ -108,10 +108,10 @@ void GameManager::displayGameOver(const std::vector<std::unique_ptr<Player> > &p
             finalRankings.emplace_back(player->getName(), player->getChipCount());
         }
 
-        std::sort(finalRankings.begin(), finalRankings.end(),
-                  [](const auto &a, const auto &b) {
-                      return a.second > b.second;
-                  });
+        std::ranges::sort(finalRankings,
+                          [](const auto &a, const auto &b) {
+                              return a.second > b.second;
+                          });
 
         for (size_t i = 0; i < finalRankings.size(); i++) {
             std::string medal;

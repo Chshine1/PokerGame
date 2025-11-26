@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <memory>
+#include <ranges>
 #include <vector>
 
 #include "Player.h"
@@ -47,8 +48,8 @@ void PotDisplay::display(const std::vector<std::unique_ptr<Player> > &players) c
 
 int PotDisplay::getTotalPot() const {
     int total = mainPot_;
-    for (const auto &sidePot: sidePots_) {
-        total += sidePot.first;
+    for (const auto &key: sidePots_ | std::views::keys) {
+        total += key;
     }
     return total;
 }
@@ -70,7 +71,7 @@ void PotDisplay::displaySimple() const {
 }
 
 void PotDisplay::distributeToWinner(const std::string &playerName) {
-    const int totalWon = getTotalPot();
+    const auto totalWon = getTotalPot();
     std::cout << "\n🎉 " << playerName << " 赢得 ";
 
     if (!sidePots_.empty()) {
@@ -90,8 +91,8 @@ void PotDisplay::distributeToWinner(const std::string &playerName) {
 
 void PotDisplay::distributeToWinners(const std::vector<int> &winnerIndices,
                                      const std::vector<std::string> &winnerNames) {
-    const int totalPot = getTotalPot();
-    const int share = totalPot / winnerIndices.size();
+    const auto totalPot = getTotalPot();
+    const auto share = totalPot / winnerIndices.size();
 
     std::cout << "\n🤝 平局！获胜者: ";
     for (size_t i = 0; i < winnerNames.size(); i++) {

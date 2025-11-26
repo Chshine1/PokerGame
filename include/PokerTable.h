@@ -1,8 +1,5 @@
 ﻿#ifndef POKER_TABLE_H
 #define POKER_TABLE_H
-#include <algorithm>
-#include <iostream>
-#include <map>
 
 #include "GameManager.h"
 #include "GameSettings.h"
@@ -17,13 +14,14 @@ public:
     void startGame();
 
 private:
-    std::vector<std::unique_ptr<Player>> players_;
+    std::vector<std::unique_ptr<Player> > players_;
     std::vector<Card> deck_;
     std::vector<Card> communityCards_;
     int pot_;
     PotDisplay potDisplay_;
     GameManager gameManager_;
     GameSettings gameSettings_;
+
     void showWelcomeScreen();
 
     void initializeDeck();
@@ -32,7 +30,7 @@ private:
 
     void dealHoleCards();
 
-    int evaluateHandStrength(const std::vector<Card>& holeCards, const std::vector<Card>& communityCards);
+    static int evaluateHandStrength(const std::vector<Card> &holeCards, const std::vector<Card> &communityCards);
 
     void determineWinner();
 

@@ -17,7 +17,7 @@ Player::Action ComputerPlayer::makeDecision(const int currentBet, const int chip
 
     std::random_device rd_;
     std::mt19937 gen(rd_());
-    std::uniform_int_distribution<> dist(1, 100);
+    std::uniform_int_distribution dist(1, 100);
     const auto rand = dist(gen);
 
     if (currentBet > chipsCommitted) {
